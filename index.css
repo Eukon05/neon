@@ -1,0 +1,56 @@
+body{
+    text-align: center;
+}
+
+.basic-button{
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 30px;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+    padding: 2% 3%;
+}
+
+#start{
+    margin-top: 50vh;
+    background-image: linear-gradient(to bottom right, rgb(252, 110, 44), rgb(41, 194, 41));
+}
+
+#start:hover{
+    background-image: linear-gradient(to bottom right, rgb(194, 79, 25), rgb(28, 131, 28));
+}
+
+
+#game{
+    border-radius: 2%;
+    border-color: rgb(80, 79, 79);
+    border-style: solid;
+    margin: 0 auto;
+    text-align: center;
+    width: 40%;
+    visibility: hidden;
+}
+
+#image{
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    width: 100%;
+}
+
+#text{
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    font-family: "Roboto";
+    text-align: left;
+    padding-left: 2%;
+}
+
+#next{
+    background-color: rgb(8, 168, 8);
+}
+
+#next:hover{
+    background-color: rgb(6, 112, 6);
+}
