@@ -1,4 +1,4 @@
-import { Action } from "./action.js";
+import { ActionType } from "./action.js";
 import { Game } from "./game.js";
 import { Renderer } from "./renderer.js";
 
@@ -9,8 +9,9 @@ async function main(){
     renderer = new Renderer();
 
     let fMap = {
-        [Action.FRAME_NEXT]: frameNext,
-        [Action.LEVEL_NEXT]: levelNext
+        [ActionType.FRAME_NEXT]: frameNext,
+        [ActionType.LEVEL_NEXT]: levelNext,
+        [ActionType.FRAME_GOTO]: frameGoto
     };
 
     document.getElementById("game").style.visibility = "visible";
@@ -23,17 +24,28 @@ async function main(){
     console.log("NEON: Engine started!");
 }
 
-function frameNext(){
+function frameNext(details){
     if(game.currentFrame >= game.currentLevel.frames.length - 1){
         console.log("NEON: End of level");
-        levelNext();
+        levelNext(null);
         return;
     }
     game.currentFrame++;
     renderer.render(game.currentLevel.frames[game.currentFrame]);
 }
 
-async function levelNext(){
+function frameGoto(details){
+    let targetFrame = details.frame;
+    if(targetFrame < 0 || targetFrame >= game.currentLevel.frames.length){
+        console.log("NEON: Invalid frame number");
+        alert("Invalid frame number");
+        return;
+    }
+    game.currentFrame = targetFrame;
+    renderer.render(game.currentLevel.frames[targetFrame]);
+}
+
+async function levelNext(details){
     let nextLevel = game.currentLevel.nextLevel;
 
     if(nextLevel === null){
@@ -49,7 +61,7 @@ async function levelNext(){
 
 function nextButton(){
     let exe = game.currentLevel.frames[game.currentFrame].mainAction;
-    game.functionMap[exe]();
+    game.functionMap[exe.type](exe.details);
 }
 
 document.getElementById('start').addEventListener('click', main);

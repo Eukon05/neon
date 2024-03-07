@@ -8,10 +8,10 @@ export class Renderer {
         this.#bg = document.getElementById("image");
     }
 
-    render(frame){
+    render(frame) {
         this.#bg.setAttribute("src", "bg/" + frame.bg);
 
-        this.#typeWriter(frame.text, 50);
+        this.#typeWriter(frame.text, 15);
 
         if(frame.bgm == "STOP"){
             this.#bgm.pause();
@@ -25,7 +25,6 @@ export class Renderer {
             this.#bgm.src = "bgm/" + frame.bgm;
             this.#bgm.play();
         }
-        
     }
     #typeWriter(txt, speed) {
         let i = 0;

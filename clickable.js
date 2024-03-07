@@ -8,6 +8,6 @@ export class Clickable{
     }
 
     static fromJSON(json){
-        return new Clickable(Action[json.action]);
+        return new Clickable(Action.fromJSON(json.action));
     }
 }

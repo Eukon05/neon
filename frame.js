@@ -17,6 +17,6 @@ export class Frame{
     }
 
     static fromJSON(json){
-        return new Frame(json.bg, json.bgm, json.text, Action[json.mainAction], json.clickables.map(Clickable.fromJSON));
+        return new Frame(json.bg, json.bgm, json.text, Action.fromJSON(json.mainAction), json.clickables.map(Clickable.fromJSON));
     }
 }
