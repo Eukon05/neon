@@ -1,5 +1,3 @@
-import { Game } from "./game.js";
-
 export class Renderer {
     #text;
     #bg;
