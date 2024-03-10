@@ -1,18 +1,30 @@
 export class Renderer {
     #text;
     #bg;
+    #clickables
     #bgm = new Audio();
     #sfx = new Audio();
+    #game;
 
-    constructor () {
+    constructor (game) {
         this.#text = document.getElementById("text");
         this.#bg = document.getElementById("image");
+        this.#clickables = document.getElementById("clickables");
         this.#bgm.loop = true;
         this.#sfx.loop = false;
+        this.#game = game;
     }
 
-    render(frame) {
-        this.#bg.setAttribute("src", "bg/" + frame.bg);
+    render(frame) {  
+        let img = new Image();
+        img.src = "bg/" + frame.bg;
+
+        img.onload = () => {
+            this.#bg.style.backgroundImage = "url(" + img.src + ")";
+            this.#bg.style.width = img.naturalWidth + "px";
+            this.#bg.style.height = img.naturalHeight + "px";
+            this.#prepareGrid(img.naturalHeight, img.naturalWidth, frame.clickables, frame.gridDivisor);
+        }
 
         this.#typeWriter(frame.text, 15);
 
@@ -29,9 +41,11 @@ export class Renderer {
             this.#bgm.play();
         }
 
-        this.#sfx.src = "sfx/" + frame.sfx;
+        if(frame.sfx == undefined && frame.sfx != null)
+            this.#sfx.src = "sfx/" + frame.sfx;
         this.#sfx.play();
     }
+
     #typeWriter(txt, speed) {
         let i = 0;
         let fText = this.#text;
@@ -44,5 +58,22 @@ export class Renderer {
             }
         }
         inner();
+    }
+
+    #prepareGrid(height, width, clickables, divisor){
+        this.#clickables.innerHTML = "";
+
+        for(let i = 0; i < height / divisor; i++){
+            let row = this.#clickables.insertRow();
+            for(let j = 0; j < width / divisor; j++){
+                row.insertCell();
+            }
+        }
+
+        for (let element of clickables) {
+            let cell = this.#clickables.rows[element.gridY].cells[element.gridX];
+            cell.style.cursor = "pointer";
+            cell.onclick = this.#game.functionMap[element.action.type].bind(this.#game, element.action.details);
+        }
     }
 }

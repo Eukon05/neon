@@ -6,8 +6,6 @@ let game = null;
 let renderer = null;
 
 async function main(){
-    renderer = new Renderer();
-
     let fMap = {
         [ActionType.FRAME_NEXT]: frameNext,
         [ActionType.LEVEL_NEXT]: levelNext,
@@ -20,6 +18,9 @@ async function main(){
     console.log("NEON: Welcome to NEON V0.0.1a");
 
     game = await Game.init("levels/level.json", fMap);
+
+    renderer = new Renderer(game);
+
     renderer.render(game.currentLevel.frames[game.currentFrame]);
     console.log("NEON: Engine started!");
 }
