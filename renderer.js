@@ -5,17 +5,26 @@ export class Renderer {
     #bgm = new Audio();
     #sfx = new Audio();
     #game;
+    #nextButton;
 
     constructor (game) {
         this.#text = document.getElementById("text");
         this.#bg = document.getElementById("image");
         this.#clickables = document.getElementById("clickables");
+        this.#nextButton = document.getElementById("nextButton");
         this.#bgm.loop = true;
         this.#sfx.loop = false;
         this.#game = game;
     }
 
-    render(frame) {  
+    render(frame) {
+        if(frame.mainAction != undefined && frame.mainAction != null){
+            this.#nextButton.onclick = this.#game.functionMap[frame.mainAction.type].bind(this.#game, frame.mainAction.details);
+            this.#nextButton.style.visibility = "visible";
+        }
+        else
+            this.#nextButton.style.visibility = "hidden";
+        
         let img = new Image();
         img.src = "bg/" + frame.bg;
 

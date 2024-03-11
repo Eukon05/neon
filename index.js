@@ -9,7 +9,8 @@ async function main(){
     let fMap = {
         [ActionType.FRAME_NEXT]: frameNext,
         [ActionType.LEVEL_NEXT]: levelNext,
-        [ActionType.FRAME_GOTO]: frameGoto
+        [ActionType.FRAME_GOTO]: frameGoto,
+        [ActionType.ALERT]: showAlert
     };
 
     document.getElementById("game").style.visibility = "visible";
@@ -60,10 +61,8 @@ async function levelNext(details){
     renderer.render(game.currentLevel.frames[game.currentFrame]);
 }
 
-function nextButton(){
-    let exe = game.currentLevel.frames[game.currentFrame].mainAction;
-    game.functionMap[exe.type](exe.details);
+function showAlert(details){
+    alert(details.alertText);
 }
 
 document.getElementById('start').addEventListener('click', main);
-document.getElementById('next').addEventListener('click', nextButton);

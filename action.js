@@ -5,6 +5,7 @@ export const ActionType = Object.freeze({
     LEVEL_NEXT : "level_next",
     FRAME_GOTO : "frame_goto",
     LEVEL_GOTO : "level_goto",
+    ALERT : "alert"
 });
 
 export class Action{
