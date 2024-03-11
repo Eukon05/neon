@@ -32,6 +32,7 @@ export class Renderer {
             this.#bg.style.backgroundImage = "url(" + img.src + ")";
             this.#bg.style.width = img.naturalWidth + "px";
             this.#bg.style.height = img.naturalHeight + "px";
+            this.#text.style.width = img.naturalWidth + "px";
             this.#prepareGrid(img.naturalHeight, img.naturalWidth, frame.clickables, frame.gridDivisor);
         }
 
