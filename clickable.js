@@ -2,16 +2,14 @@ import { Action } from "./action.js";
 
 export class Clickable{
     action;
-    gridX;
-    gridY;
+    coords;
 
-    constructor(action, gridX, gridY){
+    constructor(action, coords){
         this.action = action;
-        this.gridX = gridX;
-        this.gridY = gridY;
+        this.coords = coords;
     }
 
     static fromJSON(json){
-        return new Clickable(Action.fromJSON(json.action), json.gridX, json.gridY);
+        return new Clickable(Action.fromJSON(json.action), json.coords);
     }
 }

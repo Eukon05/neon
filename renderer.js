@@ -80,10 +80,16 @@ export class Renderer {
             }
         }
 
+        let cell, x, y;
         for (let element of clickables) {
-            let cell = this.#clickables.rows[element.gridY].cells[element.gridX];
-            cell.style.cursor = "pointer";
-            cell.onclick = this.#game.functionMap[element.action.type].bind(this.#game, element.action.details);
+            for (let i = 0; i < element.coords.length; i++){
+                x = element.coords[i][0];
+                y = element.coords[i][1];
+
+                cell = this.#clickables.rows[y].cells[x];
+                cell.style.cursor = "pointer";
+                cell.onclick = this.#game.functionMap[element.action.type].bind(this.#game, element.action.details);
+            }
         }
     }
 }

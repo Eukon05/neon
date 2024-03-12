@@ -18,7 +18,7 @@ async function main(){
 
     console.log("NEON: Welcome to NEON V0.0.1a");
 
-    game = await Game.init("levels/level.json", fMap);
+    game = await Game.init("levels/yttd.json", fMap);
 
     renderer = new Renderer(game);
 
