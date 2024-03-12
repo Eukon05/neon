@@ -80,13 +80,10 @@ export class Renderer {
             }
         }
 
-        let cell, x, y;
+        let cell;
         for (let element of clickables) {
-            for (let i = 0; i < element.coords.length; i++){
-                x = element.coords[i][0];
-                y = element.coords[i][1];
-
-                cell = this.#clickables.rows[y].cells[x];
+            for(let coords of element.coords){
+                cell = this.#clickables.rows[coords[1]].cells[coords[0]];
                 cell.style.cursor = "pointer";
                 cell.onclick = this.#game.functionMap[element.action.type].bind(this.#game, element.action.details);
             }
