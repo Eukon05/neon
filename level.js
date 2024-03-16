@@ -12,6 +12,8 @@ export class Level{
     }
 
     static fromJSON(json){
+        if(json == null)
+            return null;
         return new Level(json.name, json.frames.map(Frame.fromJSON), json.nextLevel);
     }
 }

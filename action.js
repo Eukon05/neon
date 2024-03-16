@@ -17,6 +17,8 @@ export class Action{
     }
 
     static fromJSON(json){
+        if(json == undefined ||  json == null)
+            return null;
         return new Action(ActionType[json.type], json.details);
     }
 }
