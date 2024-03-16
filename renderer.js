@@ -111,6 +111,27 @@ export class Renderer {
     }
 
     #prepareDialogue(dialogue){
+        if(dialogue.speakerPos != undefined && dialogue.speakerPos != null){
+            switch(dialogue.speakerPos){
+                case 0 : {
+                    this.#sprite.style.backgroundPositionX = "left";
+                    break;
+                }
+                case 1 : {
+                    this.#sprite.style.backgroundPositionX = "center";
+                    break;
+                }
+                case 2 : {
+                    this.#sprite.style.backgroundPositionX = "right";
+                    break;
+                }
+            }
+        }
+        else {
+            this.#sprite.style.backgroundPositionX = "center";
+        }
+
+
         if(dialogue.sprite != undefined && dialogue.sprite != null){
             let src = "url(sprites/" + dialogue.sprite + ")";
             if(this.#sprite.style.backgroundImage != src)
