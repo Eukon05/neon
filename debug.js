@@ -6,7 +6,6 @@ function debugGrid(){
         else
             x.style.border = '2px solid red';
 
-        x.style.fontSize = "40px";
         x.textContent = x.cellIndex + " , " + x.parentNode.rowIndex;
     }
     return "NEON-DEBUG: Debug view of the grid enabled";
