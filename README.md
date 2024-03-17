@@ -31,6 +31,7 @@ These files can be in any media format supported by JS.
             "gridDivisor" : null,
             "dialogue" : {
                 "speaker" : "Narrator",
+                "speakerPos" : 2,
                 "sprite" : "narrator.webp",
                 "text" : "Hiya. Welcome to NEON",
                 "action" : {

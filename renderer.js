@@ -90,7 +90,7 @@ export class Renderer {
     #prepareGrid(height, width, clickables, divisor){
         this.#clickables.innerHTML = "";
 
-        if(clickables == undefined || clickables == null || clickables.length == 0)
+        if(divisor == undefined || divisor == null)
             return;
 
         for(let i = 0; i < height / divisor; i++){
@@ -99,6 +99,9 @@ export class Renderer {
                 row.insertCell();
             }
         }
+
+        if(clickables == undefined || clickables == null || clickables.length == 0)
+            return;
 
         let cell;
         for (let element of clickables) {
