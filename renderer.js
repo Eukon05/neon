@@ -8,6 +8,7 @@ export class Renderer {
     #speaker;
     #game;
     #nextButton;
+    #choices;
 
     constructor (game) {
         this.#text = document.getElementById("text");
@@ -19,6 +20,7 @@ export class Renderer {
         this.#bgm.loop = true;
         this.#sfx.loop = false;
         this.#game = game;
+        this.#choices = document.getElementById("choices");
     }
 
     render(frame) {
@@ -155,6 +157,35 @@ export class Renderer {
         if(dialogue.action != undefined && dialogue.action != null && Object.keys(dialogue.action).length != 0){
             this.#nextButton.onclick = this.#game.functionMap[dialogue.action.type].bind(this.#game, dialogue.action.details);
             this.#nextButton.style.display = "inline-block";
-        }    
+        }
+        
+        this.#prepareChoices(dialogue.choices);
+    }
+
+    #prepareChoices(choices){
+        this.#choices.innerHTML = "";
+
+        if(choices == undefined || choices == null || choices.length == 0)
+            return;
+
+        let cell;
+        for(let i = 0; i < choices.length; i++){
+            if(choices[i].text == undefined || choices[i].text == null || choices[i].action == undefined || choices[i].action == null)
+                continue;
+
+            cell = this.#choices.insertRow(i).insertCell(0);
+            cell.textContent = choices[i].text;
+            cell.onclick = this.#game.functionMap[choices[i].action.type].bind(this.#game, choices[i].action.details);
+
+            if(choices[i].bgColor == undefined || choices[i].bgColor == null)
+                cell.style.backgroundColor = "#ab741b"
+            else
+                cell.style.backgroundColor = choices[i].bgColor;
+
+            if(choices[i].fontColor == undefined || choices[i].fontColor == null)
+                cell.style.color = "white"
+            else
+                cell.style.color = choices[i].fontColor;
+        }
     }
 }
