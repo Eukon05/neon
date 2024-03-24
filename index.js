@@ -1,68 +1,32 @@
 import { ActionType } from "./action.js";
 import { Game } from "./game.js";
 import { Renderer } from "./renderer.js";
+import * as Logic from "./logic.js";
 
 let game = null;
 let renderer = null;
 
 async function main(){
+    //Preparing bindings for custom logic to be executed on in-game events
+    //If you want to use custom functions in your game, just extend this map in a similar manner, without relying on the ActionType "enum", as shown below:
     let fMap = {
-        [ActionType.FRAME_NEXT]: frameNext,
-        [ActionType.LEVEL_NEXT]: levelNext,
-        [ActionType.FRAME_GOTO]: frameGoto,
-        [ActionType.ALERT]: showAlert
+        //"frame_next" : Logic.frameNext would also work, but I'm using the ActionType enum for convenience here
+        [ActionType.FRAME_NEXT]: Logic.frameNext,
+        [ActionType.LEVEL_NEXT]: Logic.levelNext,
+        [ActionType.FRAME_GOTO]: Logic.frameGoto,
+        [ActionType.ALERT]: Logic.showAlert
+        //"someCustomFunction" : customFunction
     };
 
-    document.getElementById("game").style.visibility = "visible";
     document.getElementById("start").remove();
 
     console.log("NEON: Welcome to NEON V0.0.1a");
 
     game = await Game.init("levels/yttd.json", fMap);
-
     renderer = new Renderer(game);
 
     renderer.render(game.currentLevel.frames[game.currentFrame]);
     console.log("NEON: Engine started!");
-}
-
-function frameNext(details){
-    if(game.currentFrame >= game.currentLevel.frames.length - 1){
-        console.log("NEON: End of level");
-        levelNext(null);
-        return;
-    }
-    game.currentFrame++;
-    renderer.render(game.currentLevel.frames[game.currentFrame]);
-}
-
-function frameGoto(details){
-    let targetFrame = details.frame;
-    if(targetFrame < 0 || targetFrame >= game.currentLevel.frames.length){
-        console.log("NEON: Invalid frame number");
-        alert("Invalid frame number");
-        return;
-    }
-    game.currentFrame = targetFrame;
-    renderer.render(game.currentLevel.frames[targetFrame]);
-}
-
-async function levelNext(details){
-    let nextLevel = game.currentLevel.nextLevel;
-
-    if(nextLevel === null){
-        console.log("NEON: No more levels to load!");
-        alert("No more levels to load!");
-        return;
-    }
-
-    game.currentLevel = await game.readLevel("levels/" + nextLevel + ".json");
-    game.currentFrame = 0;
-    renderer.render(game.currentLevel.frames[game.currentFrame]);
-}
-
-function showAlert(details){
-    alert(details.alertText);
 }
 
 document.getElementById('start').addEventListener('click', main);

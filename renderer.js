@@ -1,26 +1,47 @@
 export class Renderer {
-    #text;
-    #bg;
-    #clickables
+    #text = document.createElement('p');
+    #bg = document.createElement("div");
+    #clickables = document.createElement("table")
     #bgm = new Audio();
     #sfx = new Audio();
-    #sprite;
-    #speaker;
+    #sprite = document.createElement("div");
+    #speaker = document.createElement("h3");
+    #nextButton = document.createElement("button");
+    #choices = document.createElement('table');
+    
     #game;
-    #nextButton;
-    #choices;
 
     constructor (game) {
-        this.#text = document.getElementById("text");
-        this.#bg = document.getElementById("image");
-        this.#clickables = document.getElementById("clickables");
-        this.#sprite = document.getElementById("sprite");
-        this.#speaker = document.getElementById("speaker");
-        this.#nextButton = document.getElementById("nextButton");
+        this.#text.id = "text";
+        this.#bg.id = "image";
+        this.#clickables.id = "clickables";
+        this.#choices.id = "choices";
+        this.#sprite.id = "sprite";
+        this.#speaker.id = "speaker";
+        this.#nextButton.id = "nextButton";
+
+        this.#text.className = "basic-text transitioning-text";
+        this.#speaker.className = "basic-text transitioning-text";
+        this.#nextButton.className = "basic-button";
+
+        this.#nextButton.textContent = "→";
+
+        let gameDiv = document.createElement('div');
+        gameDiv.id = "game";
+        document.body.appendChild(gameDiv);
+
+        gameDiv.appendChild(this.#bg);
+        this.#bg.appendChild(this.#sprite);
+        this.#sprite.appendChild(this.#clickables);
+        this.#sprite.appendChild(this.#choices);
+
+        gameDiv.appendChild(this.#speaker);
+        gameDiv.appendChild(this.#text);
+        gameDiv.appendChild(this.#nextButton);
+
         this.#bgm.loop = true;
         this.#sfx.loop = false;
         this.#game = game;
-        this.#choices = document.getElementById("choices");
     }
 
     render(frame) {
@@ -110,7 +131,7 @@ export class Renderer {
             for(let coords of element.coords){
                 cell = this.#clickables.rows[coords[1]].cells[coords[0]];
                 cell.style.cursor = "pointer";
-                cell.onclick = this.#game.functionMap[element.action.type].bind(this.#game, element.action.details);
+                cell.onclick = this.#game.functionMap[element.action.type].bind(this, this.#game, element.action.details);
             }
         }
     }
@@ -155,7 +176,7 @@ export class Renderer {
         }
         
         if(dialogue.action != undefined && dialogue.action != null && Object.keys(dialogue.action).length != 0){
-            this.#nextButton.onclick = this.#game.functionMap[dialogue.action.type].bind(this.#game, dialogue.action.details);
+            this.#nextButton.onclick = this.#game.functionMap[dialogue.action.type].bind(this, this.#game, dialogue.action.details);
             this.#nextButton.style.display = "inline-block";
         }
         
@@ -175,7 +196,7 @@ export class Renderer {
 
             cell = this.#choices.insertRow(i).insertCell(0);
             cell.textContent = choices[i].text;
-            cell.onclick = this.#game.functionMap[choices[i].action.type].bind(this.#game, choices[i].action.details);
+            cell.onclick = this.#game.functionMap[choices[i].action.type].bind(this, this.#game, choices[i].action.details);
 
             if(choices[i].bgColor == undefined || choices[i].bgColor == null)
                 cell.style.backgroundColor = "#ab741b"
