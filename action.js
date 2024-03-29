@@ -2,13 +2,12 @@
 //It exists purely for my convenience of not having to type these function names as strings anywhere in the engine's code.
 //If you want to use custom logic in your game, you don't have to modify this.
 export const ActionType = Object.freeze({
-    FRAME_NEXT : "frame_next",
-    FRAME_PREV : "frame_prev",
-    FRAME_GOTO : "frame_goto",
-    LEVEL_NEXT : "level_next",
-    FRAME_GOTO : "frame_goto",
-    LEVEL_GOTO : "level_goto",
-    ALERT : "alert"
+    FRAME_NEXT : "FRAME_NEXT",
+    FRAME_PREV : "FRAME_PREV",
+    FRAME_GOTO : "FRAME_GOTO",
+    LEVEL_NEXT : "LEVEL_NEXT",
+    LEVEL_GOTO : "LEVEL_GOTO",
+    ALERT : "ALERT"
 });
 
 export class Action{
@@ -20,8 +19,8 @@ export class Action{
     }
 
     static fromJSON(json){
-        if(json == undefined ||  json == null)
+        if(json == undefined ||  json == null || json.type == undefined || json.type == null)
             return null;
-        return new Action(ActionType[json.type], json.details);
+        return new Action(json.type, json.details);
     }
 }
