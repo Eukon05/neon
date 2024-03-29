@@ -14,7 +14,9 @@ async function main(){
         [ActionType.FRAME_NEXT]: Logic.frameNext,
         [ActionType.LEVEL_NEXT]: Logic.levelNext,
         [ActionType.FRAME_GOTO]: Logic.frameGoto,
-        [ActionType.ALERT]: Logic.showAlert
+        [ActionType.ALERT]: Logic.showAlert,
+        [ActionType.SHOW_DIALOGUE] : Logic.showDialogue,
+        [ActionType.CLEAR_DIALOGUE] : Logic.clearDialogue
         //"someCustomFunction" : customFunction
     };
 
@@ -22,7 +24,7 @@ async function main(){
 
     console.log("NEON: Welcome to NEON V0.0.1a");
 
-    game = await Game.init("levels/yttd.json", fMap);
+    game = await Game.init("levels/yttd-old.json", fMap);
     renderer = new Renderer(game);
 
     renderer.render(game.currentLevel.frames[game.currentFrame]);

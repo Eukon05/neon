@@ -6,6 +6,8 @@ Also, every function invoked by the renderer HAS TO accept a "game" parameter an
 Keep all of this in mind while designing your own logic functions.
 */
 
+import { Dialogue } from "./dialogue.js";
+
 export function frameNext(game, details){
     if(game.currentFrame >= game.currentLevel.frames.length - 1){
         console.log("NEON: End of level");
@@ -43,4 +45,12 @@ export async function levelNext(game, details){
 
 export function showAlert(game, details){
     alert(details.alertText);
+}
+
+export function showDialogue(game, details){
+    this.prepareDialogue(Dialogue.fromJSON(details.dialogue));
+}
+
+export function clearDialogue(game, details){
+    this.clearDialogue();
 }

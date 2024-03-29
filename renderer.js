@@ -45,14 +45,7 @@ export class Renderer {
     }
 
     render(frame) {
-        this.#text.style.fontSize = "0px";
-        this.#speaker.style.fontSize = "0px";
-
-        this.#text.textContent = "";
-        this.#speaker.textContent = "";
-        this.#nextButton.style.display = "none";
-
-        this.#sprite.style.backgroundImage = null;
+        this.clearDialogue();
 
         this.#bgm.pause();
         this.#sfx.pause();
@@ -77,7 +70,7 @@ export class Renderer {
         
 
         if(frame.dialogue != undefined && frame.dialogue != null && Object.keys(frame.dialogue).length != 0)
-            this.#prepareDialogue(frame.dialogue);
+            this.prepareDialogue(frame.dialogue);
 
         if(frame.bgm == undefined || frame.bgm == null || frame.bgm == "STOP"){
             this.#bgm.pause();
@@ -136,7 +129,18 @@ export class Renderer {
         }
     }
 
-    #prepareDialogue(dialogue){
+    clearDialogue(){
+        this.#text.style.fontSize = "0px";
+        this.#speaker.style.fontSize = "0px";
+
+        this.#text.textContent = "";
+        this.#speaker.textContent = "";
+        this.#nextButton.style.display = "none";
+
+        this.#sprite.style.backgroundImage = null;
+    }
+
+    prepareDialogue(dialogue){
         if(dialogue.speakerPos != undefined && dialogue.speakerPos != null){
             switch(dialogue.speakerPos){
                 case 0 : {

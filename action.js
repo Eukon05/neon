@@ -7,7 +7,9 @@ export const ActionType = Object.freeze({
     FRAME_GOTO : "FRAME_GOTO",
     LEVEL_NEXT : "LEVEL_NEXT",
     LEVEL_GOTO : "LEVEL_GOTO",
-    ALERT : "ALERT"
+    ALERT : "ALERT",
+    SHOW_DIALOGUE : "SHOW_DIALOGUE",
+    CLEAR_DIALOGUE : "CLEAR_DIALOGUE"
 });
 
 export class Action{
