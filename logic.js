@@ -11,7 +11,7 @@ import { Dialogue } from "./dialogue.js";
 export function frameNext(game, details){
     if(game.currentFrame >= game.currentLevel.frames.length - 1){
         console.log("NEON: End of level");
-        levelNext(game, null);
+        levelNext.bind(this, game, null)();
         return;
     }
     game.currentFrame++;
