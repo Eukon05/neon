@@ -104,6 +104,7 @@ export class Renderer {
     }
 
     #prepareGrid(height, width, clickables, divisor){
+        this.#clickables.style.visibility = "visible"
         this.#clickables.innerHTML = "";
 
         if(divisor == undefined || divisor == null)
@@ -138,6 +139,7 @@ export class Renderer {
         this.#nextButton.style.display = "none";
 
         this.#sprite.style.backgroundImage = null;
+        this.#clickables.style.visibility = "visible"
     }
 
     prepareDialogue(dialogue){
@@ -147,12 +149,13 @@ export class Renderer {
                     this.#sprite.style.backgroundPositionX = "left";
                     break;
                 }
-                case 1 : {
-                    this.#sprite.style.backgroundPositionX = "center";
-                    break;
-                }
                 case 2 : {
                     this.#sprite.style.backgroundPositionX = "right";
+                    break;
+                }
+                default:
+                case 1 : {
+                    this.#sprite.style.backgroundPositionX = "center";
                     break;
                 }
             }
@@ -185,6 +188,7 @@ export class Renderer {
         }
         
         this.#prepareChoices(dialogue.choices);
+        this.#clickables.style.visibility = "hidden"
     }
 
     #prepareChoices(choices){
